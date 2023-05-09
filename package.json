@@ -11,6 +11,7 @@
     "@commitlint/cli": "^11.0.0",
     "@commitlint/config-conventional": "^11.0.0",
     "@tsconfig/node18": "^1.0.0",
+    "@types/lodash": "^4.14.194",
     "babel-eslint": "^10.1.0",
     "commitizen": "^4.2.1",
     "cz-conventional-changelog": "^3.3.0",

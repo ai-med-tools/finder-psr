@@ -1,15 +1,34 @@
 import filter from 'lodash/filter';
+import Tokenizer from "@ai-med-tools/tokenizer";
+import * as fs from "fs";
 
 export type TokenDto = {
     startFromAnamnesis: number;
     text: string;
 }
 export class M1 {
-    public static comparingTwoTokinzedMarkups(tokenizedMarkupExpert: TokenDto[], tokenizedMarkupMember: TokenDto[]) {
-        const viewedExpert = tokenizedMarkupExpert.map((value) => {
+    public static comparingTwoTokinzedMarkups(tokenizedMarkupExpert: any, tokenizedMarkupMember: any, debugFileName: string| null = null) {
+        // console.log(123);
+        // console.log(debugFileName);
+        if (debugFileName) {
+            // console.log({tokenizedMarkupExpert});
+        }
+
+        const preparedExpertsTokenized = Tokenizer.prepareToTokenize(tokenizedMarkupExpert);
+        const resultExpertsTokenized = Tokenizer.tokenize(preparedExpertsTokenized).flat();
+        const preparedMemberTokenized = Tokenizer.prepareToTokenize(tokenizedMarkupMember);
+        const resultMemberTokenized = Tokenizer.tokenize(preparedMemberTokenized).flat();
+
+        if (debugFileName) {
+            fs.writeFileSync(`src/debug/${debugFileName}.log`, JSON.stringify(resultExpertsTokenized, null, 4));
+        }
+
+
+
+        const viewedExpert = resultExpertsTokenized.map((value) => {
             return {startFromAnamnesis: value.startFromAnamnesis, text: value.text, viewed: false, right: false}
         });
-        const viewedMember = tokenizedMarkupMember.map((value) => {
+        const viewedMember = resultMemberTokenized.map((value) => {
             return {startFromAnamnesis: value.startFromAnamnesis, text: value.text, viewed: false, right: false}
         });
 
@@ -82,5 +101,5 @@ const y =   [
     }
 ];
 
-const result = M1.comparingTwoTokinzedMarkups(x, y);
-console.log(JSON.stringify(result, null, 2));
+// const result = M1.comparingTwoTokinzedMarkups(x, y);
+// console.log(JSON.stringify(result, null, 2));

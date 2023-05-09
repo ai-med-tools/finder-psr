@@ -21,8 +21,8 @@ export class M2 {
             }
         });
 
-        console.log({ xLength: expertMarkup.length} );
-        console.log({ yLength: memberMarkup.length});
+        // console.log({ xLength: expertMarkup.length} );
+        // console.log({ yLength: memberMarkup.length});
 
         /** Считаем парасочетания */
 
@@ -55,13 +55,8 @@ export class M2 {
         const delimeter = xToG + yToG + matchedResult.length;
 
 
-        const m1Result = M1.comparingTwoTokinzedMarkups(resultMemberTokenized, resultExpertsTokenized);
+        const m1Result = M1.comparingTwoTokinzedMarkups(arMemberFragments, arExpertsFragments);
         const result = m1Result / delimeter;
-
-        console.log(result);
-        console.log({xToG});
-        console.log({yToG});
-        console.log(delimeter);
 
         return result;
     }

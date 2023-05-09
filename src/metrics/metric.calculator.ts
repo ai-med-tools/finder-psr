@@ -18,6 +18,12 @@ export class MetricCalculator {
             memberMarkup = x1;
         }
 
+        let debugFileName = null;
+
+        if (debug) {
+            debugFileName = new Date().getTime().toString();
+        }
+        console.log(debugFileName);
         expertMarkup.map((value) => {
             /** Объект из решения */
             const keys = Object.keys(value);
@@ -29,9 +35,9 @@ export class MetricCalculator {
         memberMarkup.map((value) => {
             /** Объект из решения */
             const keys = Object.keys(value);
-            console.log(keys);
+            // console.log(keys);
             if (!this.neededKeys.every((item) => {
-                console.log(item);
+                // console.log(item);
                 return keys.includes(item)
             })) {
                 throw new Error('Объект разметки участника не готов к расчёту');
@@ -45,7 +51,7 @@ export class MetricCalculator {
             m4: 0.00000000,
         }
 
-        result.m1 = M1.comparingTwoTokinzedMarkups(expertMarkup, memberMarkup);
+        result.m1 = M1.comparingTwoTokinzedMarkups(expertMarkup, memberMarkup, debugFileName);
         result.m2 = M2.calcAccuracyOfLocalizationOfSymptoms(expertMarkup, memberMarkup);
         result.m3 = M3.calcSymptomIdentificationAccuracy(expertMarkup, memberMarkup);
         result.m4 = M4.calcGeneralCriterion(expertMarkup, memberMarkup);

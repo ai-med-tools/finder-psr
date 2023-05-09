@@ -36,9 +36,9 @@ export class HungarianAlgWithloss {
             //@ts-ignore
             this.lotsOfY = y;
         }
-        console.log(2222222222222)
-        console.log(111111111111111)
-        console.log(this.lotsOfX)
+        // console.log(2222222222222)
+        // console.log(111111111111111)
+        // console.log(this.lotsOfX)
         this.lotsOfX.forEach(x => this.jaccardMatrix.push([]));
         this.lotsOfX.forEach(x => this.lossMatrix.push([]));
     }
@@ -84,8 +84,8 @@ export class HungarianAlgWithloss {
         }
 
         if (this.log) {
-            console.log('jaccardMatrix');
-            console.log(this.jaccardMatrix);
+            // console.log('jaccardMatrix');
+            // console.log(this.jaccardMatrix);
         }
     }
 
@@ -110,7 +110,7 @@ export class HungarianAlgWithloss {
             }
         }
         if (this.log) {
-            console.log(this.lossMatrix);
+            // console.log(this.lossMatrix);
         }
     }
 
@@ -188,8 +188,8 @@ export class HungarianAlgWithloss {
         }
 
         if (this.log) {
-            console.log('mline для L = 0');
-            console.log(mLineTruth);
+            // console.log('mline для L = 0');
+            // console.log(mLineTruth);
         }
 
         //Определяем компоненты связности
@@ -217,16 +217,16 @@ export class HungarianAlgWithloss {
 
         let Qm = x0PrepConnLine + y0PrepConnLine;
         if (this.log) {
-            console.log('Первое значение Qmin');
-            console.log(Qm);
+            // console.log('Первое значение Qmin');
+            // console.log(Qm);
         }
 
         if (this.log) {
             // console.log(x01 + 'x01');
-            console.log('connLine');
-            console.log(connLine);
-            console.log('Qm исходя из 𝐿[𝑖, 𝑘]');
-            console.log(Qm);
+            // console.log('connLine');
+            // console.log(connLine);
+            // console.log('Qm исходя из 𝐿[𝑖, 𝑘]');
+            // console.log(Qm);
         }
 
         const connLineFormatted = this.distributeConnComponents(connLine);
@@ -264,7 +264,7 @@ export class HungarianAlgWithloss {
                 Q = sumToQ + xEmp + yEmp;
                 if (Q < Qm) {
                     Qm = Q;
-                    console.log({Q: Q})
+                    // console.log({Q: Q})
                 } else {
                     const indexOf = mLineTruth.indexOf(connLineFormatted[compSvyaz][0]);
                     delete mLineTruth[indexOf];
@@ -312,8 +312,8 @@ export class HungarianAlgWithloss {
         }
         mLineTruth = mLineTruth.filter((n: any) => n);
         if (this.log) {
-            console.log('mLineTruth TOTAL');
-            console.log(mLineTruth);
+            // console.log('mLineTruth TOTAL');
+            // console.log(mLineTruth);
         }
 
         let countUniq = mLineTruth.length;
