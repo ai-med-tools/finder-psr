@@ -27,7 +27,7 @@
     "standard-version": "^9.0.0"
   },
   "dependencies": {
-    "@ai-med-tools/tokenizer": "^0.0.4",
+    "@ai-med-tools/tokenizer": "^0.0.6",
     "@types/node": "^14.11.5",
     "commander": "^8.2.0",
     "i": "^0.3.7",
