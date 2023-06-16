@@ -1,6 +1,9 @@
 import filter from 'lodash/filter';
 import Tokenizer from "@ai-med-tools/tokenizer";
 import * as fs from "fs";
+import find from 'lodash/find';
+import {X} from '../test_data/expert'
+import {Y} from '../test_data/member'
 
 export type TokenDto = {
     startFromAnamnesis: number;
@@ -10,9 +13,11 @@ export class M1 {
     public static comparingTwoTokinzedMarkups(tokenizedMarkupExpert: any, tokenizedMarkupMember: any, debugFileName: string| null = null) {
         // console.log(123);
         // console.log(debugFileName);
-        if (debugFileName) {
-            // console.log({tokenizedMarkupExpert});
-        }
+        // if (debugFileName) {
+        //     console.log(tokenizedMarkupExpert.length);
+        //     console.log(tokenizedMarkupMember.length);
+        //     // console.log({tokenizedMarkupExpert});
+        // }
 
         const preparedExpertsTokenized = Tokenizer.prepareToTokenize(tokenizedMarkupExpert);
         const resultExpertsTokenized = Tokenizer.tokenize(preparedExpertsTokenized).flat();
@@ -23,8 +28,6 @@ export class M1 {
             fs.writeFileSync(`src/debug/${debugFileName}.log`, JSON.stringify(resultExpertsTokenized, null, 4));
         }
 
-
-
         const viewedExpert = resultExpertsTokenized.map((value) => {
             return {startFromAnamnesis: value.startFromAnamnesis, text: value.text, viewed: false, right: false}
         });
@@ -32,41 +35,43 @@ export class M1 {
             return {startFromAnamnesis: value.startFromAnamnesis, text: value.text, viewed: false, right: false}
         });
 
-        viewedExpert.map((viewedExpertValue, viewedExpertIndex, viewedExpertArray) => {
-            viewedMember.map((viewedMemberValue, viewedMemberIndex, viewedMemberArray) => {
-                // console.log(viewedMemberValue)
-                if (!viewedMemberValue.viewed) {
-                    if (viewedExpertValue.text == viewedMemberValue.text &&
-                        viewedExpertValue.startFromAnamnesis == viewedMemberValue.startFromAnamnesis) {
+        // @ts-ignore
+        const matchedMemberWithExpert = [];
+        viewedMember.map((value, index, array) => {
+            // @ts-ignore
+            const alreadyExistsInTotalResult = find(matchedMemberWithExpert, value);
 
-                        viewedMemberArray[viewedMemberIndex].right = true;
-                        viewedExpertArray[viewedExpertIndex].right = true;
-                        viewedMemberArray[viewedMemberIndex].viewed = true;
-                        viewedExpertArray[viewedExpertIndex].viewed = true;
-                        return;
-                    }
-
-                }
-            });
-
+            const existsInExpertArray = find(viewedExpert, value);
+            if (alreadyExistsInTotalResult == undefined && existsInExpertArray) {
+                matchedMemberWithExpert.push(existsInExpertArray);
+            }
         });
 
-        const filteredExpertByOverlap = filter(viewedExpert, (item) => {
-            return item.right === true;
-        });
-        const filteredMemberByOverlap = filter(viewedMember, (item) => {
-            return item.right === true;
+        // @ts-ignore
+        const matchedExpertWithMember = [];
+        viewedExpert.map((value, index, array) => {
+            // @ts-ignore
+            const alreadyExistsInTotalResult = find(matchedExpertWithMember, value);
+
+            const existsInMemberArray = find(viewedMember, value);
+            if (alreadyExistsInTotalResult == undefined && existsInMemberArray) {
+                matchedExpertWithMember.push(existsInMemberArray);
+            }
         });
 
-        // console.log(viewedExpert.length);
-        // console.log(filteredExpertByOverlap.length);
-        /** Проверка на существование фильтеред */
-        const accuracy = filteredExpertByOverlap.length / viewedExpert.length;
-        const fullness = filteredMemberByOverlap.length / viewedMember.length;
+        if (debugFileName) {
+            console.log(`Кол-во совпавших у X(эксп) в Y(уч) - ${matchedExpertWithMember.length}`)
+            console.log(`Общая длина Y (уч) - ${viewedMember.length}`)
+
+            console.log(`Кол-во совпавших у Y(уч) в X(эксп) - ${matchedMemberWithExpert.length}`)
+            console.log(`Общая длина X (эксп) - ${viewedExpert.length}`)
+        }
+
+
+        const accuracy = matchedMemberWithExpert.length / viewedExpert.length;
+        const fullness = matchedExpertWithMember.length / viewedMember.length;
 
         const result = (2 * accuracy * fullness) / (accuracy + fullness);
-
-        // console.log(result);
 
         return result;
     }
