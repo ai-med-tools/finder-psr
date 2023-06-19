@@ -1,24 +1,14 @@
-import filter from 'lodash/filter';
 import Tokenizer from "@ai-med-tools/tokenizer";
 import * as fs from "fs";
 import find from 'lodash/find';
-import {X} from '../test_data/expert'
-import {Y} from '../test_data/member'
+import {AccuracyCompletenessSelectionsFinder} from "./metric.calculator";
 
 export type TokenDto = {
     startFromAnamnesis: number;
     text: string;
 }
 export class M1 {
-    public static comparingTwoTokinzedMarkups(tokenizedMarkupExpert: any, tokenizedMarkupMember: any, debugFileName: string| null = null) {
-        // console.log(123);
-        // console.log(debugFileName);
-        // if (debugFileName) {
-        //     console.log(tokenizedMarkupExpert.length);
-        //     console.log(tokenizedMarkupMember.length);
-        //     // console.log({tokenizedMarkupExpert});
-        // }
-
+    public static comparingTwoTokinzedMarkups(tokenizedMarkupExpert: any, tokenizedMarkupMember: any, debugFileName: string| null = null): AccuracyCompletenessSelectionsFinder {
         const preparedExpertsTokenized = Tokenizer.prepareToTokenize(tokenizedMarkupExpert);
         const resultExpertsTokenized = Tokenizer.tokenize(preparedExpertsTokenized).flat();
         const preparedMemberTokenized = Tokenizer.prepareToTokenize(tokenizedMarkupMember);
@@ -69,42 +59,15 @@ export class M1 {
 
 
         const accuracy = matchedMemberWithExpert.length / viewedExpert.length;
-        const fullness = matchedExpertWithMember.length / viewedMember.length;
+        const completeness = matchedExpertWithMember.length / viewedMember.length;
 
-        const result = (2 * accuracy * fullness) / (accuracy + fullness);
 
-        return result;
+        const aggregationOfAccuracyCompleteness = (2 * accuracy * completeness) / (accuracy + completeness);
+
+        return {
+            aggregationOfAccuracyCompleteness,
+            accuracy,
+            completeness,
+        };
     }
 }
-
-const x =   [
-    {
-        "startFromAnamnesis": 2,
-        "text": "АД"
-    },
-    {
-        "startFromAnamnesis": 2,
-        "text": "АД"
-    },
-    {
-        "startFromAnamnesis": 6,
-        "text": "130/90"
-    }
-];
-const y =   [
-    {
-        "startFromAnamnesis": 2,
-        "text": "АД"
-    },
-    {
-        "startFromAnamnesis": 6,
-        "text": "130/90"
-    },
-    {
-        "startFromAnamnesis": 6,
-        "text": "222222222"
-    }
-];
-
-// const result = M1.comparingTwoTokinzedMarkups(x, y);
-// console.log(JSON.stringify(result, null, 2));

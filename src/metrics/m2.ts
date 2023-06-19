@@ -43,7 +43,8 @@ export class M2 {
         for (const resultIter of matchedResult) {
             // resultIter[0] - эксперт
             // resultIter[1] - участник
-            sumM1 += M1.comparingTwoTokinzedMarkups([resultIter[1]], [resultIter[0]]);
+            const m1Result = M1.comparingTwoTokinzedMarkups([resultIter[1]], [resultIter[0]]);
+            sumM1 += m1Result.aggregationOfAccuracyCompleteness;
 
             arExpertsFragments.push(resultIter[0]);
             arMemberFragments.push(resultIter[1]);
