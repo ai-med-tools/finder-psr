@@ -20,15 +20,17 @@ export class M2 {
                 throw new Error('Объект разметки участника не готов к расчёту');
             }
         });
-
-        // console.log({ xLength: expertMarkup.length} );
-        // console.log({ yLength: memberMarkup.length});
-
         /** Считаем парасочетания */
 
         const algStarter = new HungarianAlgWithloss(expertMarkup, memberMarkup, true);
         const algStarterResult = algStarter.complexSearchDetailSelections();
+
+        // console.log(JSON.stringify(algStarterResult, null, 4));
+
+
         const matchedResult = algStarterResult.getMatchedDetailSelections();
+
+        // console.log(JSON.stringify(matchedResult, null, 4));
 
         /** Венгерский алгоритм отдаёт ответы парами - массивы в массиве */
         /** Элемент с индексом 0 - эксперт */
@@ -37,26 +39,22 @@ export class M2 {
         const arExpertsFragments = [];
         const arMemberFragments = [];
 
+        let sumM1 = 0;
         for (const resultIter of matchedResult) {
+            // resultIter[0] - эксперт
+            // resultIter[1] - участник
+            sumM1 += M1.comparingTwoTokinzedMarkups([resultIter[1]], [resultIter[0]]);
+
             arExpertsFragments.push(resultIter[0]);
             arMemberFragments.push(resultIter[1]);
         }
-
-        const preparedExpertsTokenized = Tokenizer.prepareToTokenize(arExpertsFragments);
-        const resultExpertsTokenized = Tokenizer.tokenize(preparedExpertsTokenized).flat();
-        const preparedMemberTokenized = Tokenizer.prepareToTokenize(arMemberFragments);
-        const resultMemberTokenized = Tokenizer.tokenize(preparedMemberTokenized).flat();
-
         /** Формируем G`, находя разницу в длине между длиной G и длиной разметок икс и игрек */
-
         const xToG = memberMarkup.length - matchedResult.length;
         const yToG = expertMarkup.length - matchedResult.length;
 
         const delimeter = xToG + yToG + matchedResult.length;
 
-
-        const m1Result = M1.comparingTwoTokinzedMarkups(arMemberFragments, arExpertsFragments);
-        const result = m1Result / delimeter;
+        const result = sumM1 / delimeter;
 
         return result;
     }
