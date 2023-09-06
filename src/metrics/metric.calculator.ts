@@ -83,6 +83,7 @@ export class MetricCalculator {
     result.m2 = M2.calcAccuracyOfLocalizationOfSymptoms(
       expertMarkup,
       memberMarkup,
+      debugFileName,
     );
     result.m3 = M3.calcSymptomIdentificationAccuracy(
       expertMarkup,

@@ -1,10 +1,11 @@
 import { HungarianAlgWithloss } from "../hungarian.alg.withloss";
 import Tokenizer from "@ai-med-tools/tokenizer";
 import {M1} from "./m1";
+import fs from "fs";
 
 export class M2 {
     public static neededKeys = ['start', 'end'];
-    public static calcAccuracyOfLocalizationOfSymptoms(expertMarkup: any[], memberMarkup: any[]) {
+    public static calcAccuracyOfLocalizationOfSymptoms(expertMarkup: any[], memberMarkup: any[], debugFileName: string| null = null) {
         expertMarkup.map((value) => {
             /** Объект из решения */
             const keys = Object.keys(value);
@@ -21,14 +22,29 @@ export class M2 {
             }
         });
         /** Считаем парасочетания */
-
         const algStarter = new HungarianAlgWithloss(expertMarkup, memberMarkup, true);
+
+        if (debugFileName) {
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nРезультат венгерского алгоритма с матрицами\n\n`);
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, JSON.stringify(algStarter, null, 4));
+        }
+
         const algStarterResult = algStarter.complexSearchDetailSelections();
+
+        if (debugFileName) {
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nРезультат поиска парасочетаний\n\n`);
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, JSON.stringify(algStarterResult, null, 4));
+        }
 
         // console.log(JSON.stringify(algStarterResult, null, 4));
 
 
         const matchedResult = algStarterResult.getMatchedDetailSelections();
+
+        if (debugFileName) {
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nСовпавшие парасочетания\n\n`);
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, JSON.stringify(matchedResult, null, 4));
+        }
 
         // console.log(JSON.stringify(matchedResult, null, 4));
 
@@ -43,7 +59,7 @@ export class M2 {
         for (const resultIter of matchedResult) {
             // resultIter[0] - эксперт
             // resultIter[1] - участник
-            const m1Result = M1.comparingTwoTokinzedMarkups([resultIter[1]], [resultIter[0]]);
+            const m1Result = M1.comparingTwoTokinzedMarkups([resultIter[1]], [resultIter[0]], debugFileName);
             sumM1 += m1Result.aggregationOfAccuracyCompleteness;
 
             arExpertsFragments.push(resultIter[0]);
@@ -55,7 +71,17 @@ export class M2 {
 
         const delimeter = xToG + yToG + matchedResult.length;
 
+        if (debugFileName) {
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nG штрих\n\n`);
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, JSON.stringify(delimeter, null, 4));
+        }
+
         const result = sumM1 / delimeter;
+
+        if (debugFileName) {
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nM2\n\n`);
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, JSON.stringify(result, null, 4));
+        }
 
         return result;
     }

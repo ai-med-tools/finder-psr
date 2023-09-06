@@ -15,7 +15,10 @@ export class M1 {
         const resultMemberTokenized = Tokenizer.tokenize(preparedMemberTokenized).flat();
 
         if (debugFileName) {
-            fs.writeFileSync(`src/debug/${debugFileName}.log`, JSON.stringify(resultExpertsTokenized, null, 4));
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, `Токенизированная разметка эксперта \n\n`);
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, JSON.stringify(resultExpertsTokenized, null, 4));
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nТокенизированная разметка участника\n\n`);
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, JSON.stringify(resultMemberTokenized, null, 4));
         }
 
         const viewedExpert = resultExpertsTokenized.map((value) => {
@@ -50,19 +53,28 @@ export class M1 {
         });
 
         if (debugFileName) {
-            console.log(`Кол-во совпавших у X(эксп) в Y(уч) - ${matchedExpertWithMember.length}`)
-            console.log(`Общая длина Y (уч) - ${viewedMember.length}`)
-
-            console.log(`Кол-во совпавших у Y(уч) в X(эксп) - ${matchedMemberWithExpert.length}`)
-            console.log(`Общая длина X (эксп) - ${viewedExpert.length}`)
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nКол-во совпавших у X(эксп) в Y(уч) - ${matchedExpertWithMember.length}\n\n`);
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nОбщая длина Y (уч) - ${viewedMember.length}\n\n`);
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nКол-во совпавших у Y(уч) в X(эксп) - ${matchedMemberWithExpert.length}\n\n`);
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nОбщая длина X (эксп) - ${viewedExpert.length}\n\n`);
         }
 
 
         const accuracy = matchedMemberWithExpert.length / viewedExpert.length;
-        const completeness = matchedExpertWithMember.length / viewedMember.length;
+        if (debugFileName) {
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nТочность - ${accuracy}\n\n`);
+        }
 
+        const completeness = matchedExpertWithMember.length / viewedMember.length;
+        if (debugFileName) {
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nПолнота - ${completeness}\n\n`);
+        }
 
         const aggregationOfAccuracyCompleteness = (2 * accuracy * completeness) / (accuracy + completeness);
+
+        if (debugFileName) {
+            fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nМ1 - ${aggregationOfAccuracyCompleteness}\n\n`);
+        }
 
         return {
             aggregationOfAccuracyCompleteness,
