@@ -1,3 +1,11 @@
+export type SocMedicaMap = {
+    /** Значения типа хеш выделения - значение  */
+    hash: string;
+    value: number;
+}[]
+
+export type SocMedicaMaps = SocMedicaMap[]
+
 export type EnterGlobalObject = {
     essay: {
         id: string;

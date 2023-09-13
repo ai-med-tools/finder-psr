@@ -1,3 +1,4 @@
+// eslint-disable-file guard-for-in
 import { LotsOf, Selections } from './types';
 
 export class HungarianAlgWithloss {
@@ -75,6 +76,7 @@ export class HungarianAlgWithloss {
   }
 
   calcJaccardMatrix() {
+
     for (const i in this.lotsOfX) {
       this.lotsOfY.forEach((item, key) => {
         const temp = this.calcCrossNDivergence(

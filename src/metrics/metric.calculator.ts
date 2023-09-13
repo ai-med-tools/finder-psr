@@ -3,6 +3,8 @@ import { M2 } from './m2';
 import { M3 } from './m3';
 import { M4 } from './m4';
 import { x1, y1 } from '../test.data';
+import {SocMedicaMap, SocMedicaMaps} from "../types";
+import find from 'lodash/find';
 
 export type AccuracyCompletenessSelectionsFinder = {
   accuracy: number;
@@ -30,7 +32,9 @@ export class MetricCalculator {
     memberMarkup: any[],
     useMock: boolean = false,
     debug: boolean = false,
+    socMedicaMap: SocMedicaMaps
   ) {
+
     if (useMock) {
       expertMarkup = y1;
       memberMarkup = x1;
@@ -85,10 +89,7 @@ export class MetricCalculator {
       memberMarkup,
       debugFileName,
     );
-    result.m3 = M3.calcSymptomIdentificationAccuracy(
-      expertMarkup,
-      memberMarkup,
-    );
+    result.m3 = M3.externalCalcSymptomIdentificationAccuracy(socMedicaMap);
     result.m4 = M4.calcGeneralCriterion(expertMarkup, memberMarkup);
 
     return result;
