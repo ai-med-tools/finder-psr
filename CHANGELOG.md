@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/ai-med-tools/finder-psr/compare/v0.0.7...v0.0.8) (2023-09-13)
+
+
+### Features
+
+* **logs:** расширенные логи ([ab472c2](https://github.com/ai-med-tools/finder-psr/commit/ab472c2d96608ee4f765eefbd0b1084ff18d5ff3))
+* **m3:** new m3 ([b3cac44](https://github.com/ai-med-tools/finder-psr/commit/b3cac44ac1a0db8c8e8df9de8cecffdb140fffc9))
+
 ### [0.0.7](https://github.com/ai-med-tools/finder-psr/compare/v0.0.6...v0.0.7) (2023-06-19)
 
 
