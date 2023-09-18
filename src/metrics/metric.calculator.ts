@@ -90,7 +90,7 @@ export class MetricCalculator {
       debugFileName,
     );
     result.m3 = M3.externalCalcSymptomIdentificationAccuracy(socMedicaMap);
-    result.m4 = M4.calcGeneralCriterion(expertMarkup, memberMarkup);
+    result.m4 = M4.calcGeneralCriterion(expertMarkup, memberMarkup, socMedicaMap);
 
     return result;
   }

@@ -1,9 +1,10 @@
 import {M2} from "./m2";
 import {M3} from "./m3";
 import {m4weight} from "../constants";
+import {SocMedicaMaps} from "../types";
 export class M4 {
     public static neededKeys = ['xPath', 'start', 'end', 'decorCode', 'code', 'name'];
-    public static calcGeneralCriterion(expertMarkup: any[], memberMarkup: any[]) {
+    public static calcGeneralCriterion(expertMarkup: any[], memberMarkup: any[], socMedicaMap: SocMedicaMaps) {
         expertMarkup.map((value) => {
             /** Объект из решения */
             const keys = Object.keys(value);
@@ -21,7 +22,7 @@ export class M4 {
         });
 
         const m2Result = M2.calcAccuracyOfLocalizationOfSymptoms(expertMarkup, memberMarkup);
-        const m3Result = M3.calcSymptomIdentificationAccuracy(expertMarkup, memberMarkup);
+        const m3Result = M3.externalCalcSymptomIdentificationAccuracy(socMedicaMap);
 
         const result = m2Result + (m4weight * m3Result);
 
