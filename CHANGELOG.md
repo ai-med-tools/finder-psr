@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.10](https://github.com/ai-med-tools/finder-psr/compare/v0.0.9...v0.0.10) (2023-10-15)
+
+
+### Bug Fixes
+
+* **token:** token update ([cadb274](https://github.com/ai-med-tools/finder-psr/commit/cadb2746d09b7b8b9b99754286ccc2d544a06b7d))
+
 ### [0.0.9](https://github.com/ai-med-tools/finder-psr/compare/v0.0.8...v0.0.9) (2023-09-18)
 
 
