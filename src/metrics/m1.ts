@@ -59,18 +59,18 @@ export class M1 {
             fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nОбщая длина X (эксп) - ${viewedExpert.length}\n\n`);
         }
 
+        const accuracy = viewedExpert.length > 0 ? matchedMemberWithExpert.length / viewedExpert.length : 0;
 
-        const accuracy = matchedMemberWithExpert.length / viewedExpert.length;
         if (debugFileName) {
             fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nТочность - ${accuracy}\n\n`);
         }
 
-        const completeness = matchedExpertWithMember.length / viewedMember.length;
+        const completeness = viewedMember.length > 0 ? matchedExpertWithMember.length / viewedMember.length : 0;
         if (debugFileName) {
             fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nПолнота - ${completeness}\n\n`);
         }
 
-        const aggregationOfAccuracyCompleteness = (2 * accuracy * completeness) / (accuracy + completeness);
+        const aggregationOfAccuracyCompleteness = (accuracy + completeness) > 0 ? (2 * accuracy * completeness) / (accuracy + completeness) : 0;
 
         if (debugFileName) {
             fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nМ1 - ${aggregationOfAccuracyCompleteness}\n\n`);

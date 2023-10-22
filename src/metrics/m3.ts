@@ -57,7 +57,9 @@ export class M3 {
             }
         }
 
-        const resultM3 = comparedHashArray.length / expertLength;
+
+
+        const resultM3 = expertLength > 0 ? comparedHashArray.length / expertLength : 0;
         return resultM3;
     }
 }

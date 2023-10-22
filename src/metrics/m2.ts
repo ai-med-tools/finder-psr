@@ -76,7 +76,7 @@ export class M2 {
             fs.appendFileSync(`src/debug/${debugFileName}.log`, JSON.stringify(delimeter, null, 4));
         }
 
-        const result = sumM1 / delimeter;
+        const result = delimeter > 0 ? sumM1 / delimeter : 0;
 
         if (debugFileName) {
             fs.appendFileSync(`src/debug/${debugFileName}.log`, `\n\nM2\n\n`);
