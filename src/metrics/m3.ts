@@ -41,20 +41,26 @@ export class M3 {
         if (socMedicaMap[0].length === 0) return 0;
         if (socMedicaMap[1].length === 0) return 0;
 
+        let index = 0;
         const expertLength = socMedicaMap[0].length;
+        const expertArray = socMedicaMap[0];
+        const participantArray = socMedicaMap[1];
         /* множество совпавших хешей */
         let comparedHashArray: string[] = [];
         /* множество использованных экспертных */
         let alreadyUsedHash: string[] = [];
-        for (const pVal of socMedicaMap[1]) {
+        for (const pVal of participantArray) {
             if (!comparedHashArray.includes(pVal.hash)) {
-                for (const eVal of socMedicaMap[0]) {
-                    if (pVal.value === eVal.value && !alreadyUsedHash.includes(eVal.hash)) {
+                for (const eVal of expertArray) {
+                    if (pVal.value.sort().toString() === eVal.value.sort().toString() && !alreadyUsedHash.includes(eVal.hash)) {
                         alreadyUsedHash.push(eVal.hash)
                         comparedHashArray.push(pVal.hash)
+
+                        break
                     }
                 }
             }
+            index++
         }
 
 
