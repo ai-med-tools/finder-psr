@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.14](https://github.com/ai-med-tools/finder-psr/compare/v0.0.13...v0.0.14) (2023-10-25)
+
+
+### Features
+
+* **weight:** m4 weight ([3b4024f](https://github.com/ai-med-tools/finder-psr/commit/3b4024f51f82e6639976a8df5f9f9db2333f2bf0))
+
 ### [0.0.13](https://github.com/ai-med-tools/finder-psr/compare/v0.0.9...v0.0.13) (2023-10-25)
 
 
