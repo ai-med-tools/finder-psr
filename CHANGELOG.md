@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.15](https://github.com/ai-med-tools/finder-psr/compare/v0.0.12...v0.0.15) (2023-11-06)
+
+
+### Features
+
+* **m3:** m3 add ([3b1c4c6](https://github.com/ai-med-tools/finder-psr/commit/3b1c4c6eff2fb51653dcc86b6245841090692b5a))
+* **token:** new tokenzer ([fddf425](https://github.com/ai-med-tools/finder-psr/commit/fddf4258d85d969e3eb77e1efd90d908af151070))
+* **weight:** m4 weight ([3b4024f](https://github.com/ai-med-tools/finder-psr/commit/3b4024f51f82e6639976a8df5f9f9db2333f2bf0))
+
 ### [0.0.14](https://github.com/ai-med-tools/finder-psr/compare/v0.0.13...v0.0.14) (2023-10-25)
 
 
